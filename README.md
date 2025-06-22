@@ -31,7 +31,7 @@ This is the *frontend version* that includes income/expense tracking UI, recent 
 
 ## 🚀 Live Demo
 
-🌐 [Click Here to View the Project](...........)
+🌐 [Click Here to View the Project](https://smartfinancebyak.netlify.app/)
 
 ---
 
