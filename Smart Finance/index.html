@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Finance - Ultimate Money Management</title>
+    
+    <!-- External Libraries -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">  
+    <link rel="stylesheet" href="css/background.css">
+    <link rel="stylesheet" href="css/stat-name.css">    
+    <link rel="stylesheet" href="css/main-dashboard-grid.css">
+    <link rel="stylesheet" href="css/transection-modal.css">
+    <link rel="stylesheet" href="css/recent-transection.css">
+    <link rel="stylesheet" href="css/financial-goal.css"
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1a1d29">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="bg-elements">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="particles" id="particles"></canvas>
+        </div>
+    </div>
+     <div class="background-container">
+        <div class="grid-overlay"></div>
+        
+        <!-- Chart Lines -->
+        <div class="chart-line" style="top: 20%; left: 0;"></div>
+        <div class="chart-line" style="top: 40%; left: 0;"></div>
+        <div class="chart-line" style="top: 60%; left: 0;"></div>
+        
+        <!-- Data Streams -->
+        <div class="data-stream" style="left: 10%;"></div>
+        <div class="data-stream" style="left: 30%;"></div>
+        <div class="data-stream" style="left: 50%;"></div>
+        <div class="data-stream" style="left: 70%;"></div>
+        <div class="data-stream" style="left: 90%;"></div>
+    </div>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-text">Smart Finance</span>
+                <div class="brand-badge">v2.0</div>
+            </div>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li>
+                    <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#transactions" class="nav-link" data-section="transactions">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Transactions</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#budget" class="nav-link" data-section="budget">
+                        <i class="fas fa-piggy-bank"></i>
+                        <span>Budget</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#analytics" class="nav-link" data-section="analytics">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Analytics</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#goa-ls" class="nav-link" data-section="goals">
+                        <i class="fas fa-target"></i>
+                        <span>Goals</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#settings" class="nav-link" data-section="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="profile-info">
+                <span class="profile-name" id="profileName">Aakash Chauhan</span>
+                <span class="profile-status">Premium</span>
+            </div>
+            <div class="profile-dropdown">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+    
+    <main class="main-content" id="mainContent">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section active">
+            <div class="section-header">
+                <div class="header-content">
+                    <h1 class="section-title">Financial Dashboard</h1>
+                    <p class="section-subtitle">Your complete financial overview at a glance</p>
+                </div>
+                <div class="header-actions">
+                    <button class="action-btn" id="refreshBtn" title="Refresh Data">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button class="action-btn" id="exportBtn" title="Export Data">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card balance-card" data-aos="fade-up">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn" id="toggleBalance" title="Toggle Balance Visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <div class="dropdown">
+                                <button class="action-btn dropdown-toggle">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Total Balance</h3>
+                        <div class="amount-display">
+                            <span class="currency">$</span>
+                            <span class="amount" id="totalBalance">24,580.75</span>
+                        </div>
+                        <div class="card-trend">
+                            <i class="fas fa-arrow-up trend-icon positive"></i>
+                            <span class="trend-text" id="balanceTrend">+12.5% from last month</span>
+                        </div>
+                    </div>
+                    <div class="card-graph">
+                        <canvas id="balanceChart" width="200" height="60"></canvas>
+                    </div>
+                </div>
+
+                <div class="stat-card income-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn" onclick="openTransactionModal('income')">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Monthly Income</h3>
+                        <div class="amount-display">
+                            <span class="currency">$</span>
+                            <span class="amount income" id="monthlyIncome">8,450.00</span>
+                        </div>
+                        <div class="card-trend">
+                            <i class="fas fa-arrow-up trend-icon positive"></i>
+                            <span class="trend-text" id="incomeTrend">+5.2% this month</span>
+                        </div>
+                        <div class="progress-indicator">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="incomeProgress"></div>
+                            </div>
+                            <span class="progress-text" id="incomeProgressText">Goal:</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card expense-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn" onclick="openTransactionModal('expense')">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Monthly Expenses</h3>
+                        <div class="amount-display">
+                            <span class="currency">$</span>
+                            <span class="amount expense" id="monthlyExpenses">3,250.50</span>
+                        </div>
+                        <div class="card-trend">
+                            <i class="fas fa-arrow-down trend-icon negative"></i>
+                            <span class="trend-text" id="expenseTrend">-8.1% this month</span>
+                        </div>
+                        <div class="expense-breakdown" id="expenseBreakdown">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card savings-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Savings Rate</h3>
+                        <div class="amount-display">
+                            <span class="amount savings" id="savingsRate">62</span>
+                            <span class="currency">%</span>
+                        </div>
+                        <div class="progress-ring">
+                            <svg class="progress-ring-svg" width="80" height="80">
+                                <circle class="progress-ring-circle-bg" cx="40" cy="40" r="30"></circle>
+                                <circle class="progress-ring-circle" cx="40" cy="40" r="30" stroke-dasharray="188.4" stroke-dashoffset="70"></circle>
+                            </svg>
+                            <div class="ring-center">
+                                <span class="ring-value" id="ringValue">62%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="quick-actions" data-aos="fade-up" data-aos-delay="400">
+                <div class="actions-header">
+                    <h3>Quick Actions</h3>
+                    <button class="customize-btn" id="customizeActions">
+                        <i class="fas fa-edit"></i>
+                        Customize
+                    </button>
+                </div>
+                <div class="actions-grid">
+                    <button class="quick-action-btn income-btn" onclick="openTransactionModal('income')">
+                        <div class="btn-icon"><i class="fas fa-plus"></i></div>
+                        <div class="btn-content">
+                            <span class="btn-title">Add Income</span>
+                            <span class="btn-subtitle">Record earnings</span>
+                        </div>
+                        <div class="btn-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </button>
+                    
+                    <button class="quick-action-btn expense-btn" onclick="openTransactionModal('expense')">
+                        <div class="btn-icon"><i class="fas fa-minus"></i></div>
+                        <div class="btn-content">
+                            <span class="btn-title">Add Expense</span>
+                            <span class="btn-subtitle">Track spending</span>
+                        </div>
+                        <div class="btn-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </button>
+                    
+                    <button class="quick-action-btn transfer-btn" onclick="openTransferModal()">
+                        <div class="btn-icon"><i class="fas fa-exchange-alt"></i></div>
+                        <div class="btn-content">
+                            <span class="btn-title">Transfer</span>
+                            <span class="btn-subtitle">Move money</span>
+                        </div>
+                        <div class="btn-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </button>
+                    
+                    <button class="quick-action-btn goal-btn" onclick="openGoalModal()">
+                        <div class="btn-icon"><i class="fas fa-bullseye"></i></div>
+                        <div class="btn-content">
+                            <span class="btn-title">Set Goal</span>
+                            <span class="btn-subtitle">Plan ahead</span>
+                        </div>
+                        <div class="btn-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </button>
+                    
+                    <button class="quick-action-btn budget-btn" onclick="openBudgetModal()">
+                        <div class="btn-icon"><i class="fas fa-chart-pie"></i></div>
+                        <div class="btn-content">
+                            <span class="btn-title">Create Budget</span>
+                            <span class="btn-subtitle">Control spending</span>
+                        </div>
+                        <div class="btn-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </button>
+                    
+                    <button class="quick-action-btn report-btn" onclick="generateReport()">
+                        <div class="btn-icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="btn-content">
+                            <span class="btn-title">Generate Report</span>
+                            <span class="btn-subtitle">Financial insights</span>
+                        </div>
+                        <div class="btn-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Main Dashboard Grid -->
+            <div class="dashboard-grid" data-aos="fade-up" data-aos-delay="500">
+                <!-- Recent Transactions -->
+                <div class="dashboard-card transactions-preview">
+                    <div class="card-header">
+                        <h3 class="card-title">Recent Transactions</h3>
+                        <div class="header-actions">
+                            <button class="filter-btn" id="transactionFilter">
+                                <i class="fas fa-filter"></i>
+                            </button>
+                            <button class="view-all-btn" onclick="switchToSection('transactions')">View All</button>
+                        </div>
+                    </div>
+                    <div class="search-container">
+                        <input type="text" id="transactionSearch" placeholder="Search transactions..." class="search-input">
+                        <div class="filter-tags" id="filterTags"></div>
+                    </div>
+                    <div class="transactions-list" id="recentTransactions">
+                        <!-- Transactions will be populated by JS -->
+                    </div>
+                    <div class="card-footer">
+                        <div class="summary-stats">
+                            <span class="stat">Today: <strong id="todayTransactions">0</strong></span>
+                            <span class="stat">This Week: <strong id="weekTransactions">0</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spending Categories -->
+                <div class="dashboard-card spending-categories">
+                    <div class="card-header">
+                        <h3 class="card-title">Spending by Category</h3>
+                        <div class="time-selector">
+                            <button class="time-btn active" data-period="week">Week</button>
+                            <button class="time-btn" data-period="month">Month</button>
+                            <button class="time-btn" data-period="year">Year</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="categoryChartBar" height="300"></canvas>
+                        <div class="chart-overlay" id="chartOverlay">
+                            <div class="chart-tooltip" id="chartTooltip"></div>
+                        </div>
+                    </div>
+                    <div class="category-legend" id="categoryLegend">
+                        <!-- Legend will be populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Financial Goals -->
+                <div class="dashboard-card goals-preview">
+                    <div class="card-header">
+                        <h3 class="card-title">Financial Goals</h3>
+                        <div class="header-actions">
+                            <button class="add-goal-btn" onclick="openGoalModal()">
+                                +
+                            </button>
+                        </div>
+                    </div>
+                    <div class="goals-list" id="goalsList">
+                        <!-- Goals will be populated by JS -->
+                    </div>
+                    <div class="goals-summary" id="goalsSummary">
+                        <!-- Summary will be populated by JS -->
+                    </div>
+                </div>
+                
+                <!-- Budget Overview Card -->
+                <div class="dashboard-card budget-overview">
+                    <button class="quick-add-btn" onclick="openModal()" title="Quick Add Budget Item">+</button>
+                    <header class="card-header">
+                        <h3 class="card-title">Budget Overview</h3>
+                        <div class="budget-period">June 2024</div>
+                    </header>
+                    <div class="budget-summary">
+                        <div class="budget-stat">
+                            <span class="label">Total Budget</span>
+                            <span class="value" id="totalBudget">$2,500</span>
+                        </div>
+                        <div class="budget-stat">
+                            <span class="label">Spent</span>
+                            <span class="value" id="totalSpent">$1,880</span>
+                        </div>
+                        <div class="budget-stat">
+                            <span class="label">Remaining</span>
+                            <span class="value positive" id="budgetRemaining">$620</span>
+                        </div>
+                    </div>
+                    <div class="budget-progress" id="budgetProgress">
+                        <div class="budget-item">
+                            <div class="budget-item-header">
+                                <span class="budget-item-name">Groceries</span>
+                                <span class="budget-item-amount">$420 / $500</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 84%;"></div>
+                            </div>
+                        </div>
+                        <div class="budget-item">
+                            <div class="budget-item-header">
+                  
+                  ``              <span class="budget-item-name">Entertainment</span>
+                                <span class="budget-item-amount">$180 / $150</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill over-budget" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                        <div class="budget-item">
+                            <div class="budget-item-header">
+                                <span class="budget-item-name">Transportation</span>
+                                <span class="budget-item-amount">$95 / $200</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 47.5%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Enhanced Transaction Modal -->
+    <div id="transactionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add Transaction</h2>
+                <button class="close-btn" onclick="closeModal('transactionModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="transaction-form" id="transactionForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transactionAmount">Amount *</label>
+                        <div class="amount-input">
+                            <input type="number" id="transactionAmount" step="0.01" required placeholder="$0.00">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="transactionDate">Date *</label>
+                        <input type="date" id="transactionDate" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="transactionCategory">Category *</label>
+                    <div class="category-selector">
+                        <select id="transactionCategory" required>
+                            <option value="">Select category</option>
+                            <optgroup label="Income">
+                                <option value="salary">💼 Salary</option>
+                                <option value="freelance">💻 Freelance</option>
+                                <option value="investment">📈 Investment</option>
+                                <option value="business">🏢 Business</option>
+                                <option value="gift">🎁 Gift</option>
+                            </optgroup>
+                            <optgroup label="Expenses">
+                                <option value="food">🍕 Food & Dining</option>
+                                <option value="transport">🚗 Transportation</option>
+                                <option value="entertainment">🎬 Entertainment</option>
+                                <option value="shopping">🛍️ Shopping</option>
+                                <option value="bills">📋 Bills & Utilities</option>
+                                <option value="healthcare">🏥 Healthcare</option>
+                                <option value="education">📚 Education</option>
+                                <option value="travel">✈️ Travel</option>
+                                <option value="insurance">🛡️ Insurance</option>
+                                <option value="other">📦 Other</option>
+                            </optgroup>
+                        </select>
+                        <button type="button" class="add-category-btn" id="addCategoryBtn">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="transactionDescription">Description</label>
+                    <input type="text" id="transactionDescription" placeholder="Enter description (optional)">
+                </div>
+                
+                <div class="form-group">
+                    <label for="transactionAccount">Account</label>
+                    <select id="transactionAccount">
+                        <option value="checking">🏦 Checking Account</option>
+                        <option value="savings">💰 Savings Account</option>
+                        <option value="credit">💳 Credit Card</option>
+                        <option value="cash">💵 Cash</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="isRecurring">
+                        <label for="isRecurring">Make this a recurring transaction</label>
+                    </div>
+                </div>
+                
+                <div class="recurring-options" id="recurringOptions" style="display: none;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="recurringFrequency">Frequency</label>
+                            <select id="recurringFrequency">
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly" selected>Monthly</option>
+                                <option value="quarterly">Quarterly</option>
+                                <option value="yearly">Yearly</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="recurringEnd">End Date</label>
+                            <input type="date" id="recurringEnd">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('transactionModal')">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Add Transaction
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+     <section id="budget" class="content-section">
+            <div class="section-header">
+                <h1 class="section-title">Budget Management</h1>
+                <p class="section-subtitle">Plan and control your spending with smart budgets</p>
+            <div class="container">
+            <!-- Budget Overview Cards -->
+           
+        </section>
+
+
+    <!-- JavaScript Files -->
+    <script src="js/script.js"></script>
+    <script src="js/finantial-stat.js"></script>
+    <script src="js/tranaction-modal.js"></script>
+    <script src="js/recent-transection.js"></script>
+    <script src="js/spending.js"></script>
+    <script src="js/finantial-goal.js"></script>
+    <script src="js/budget.js"></script>
+    <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    new FinancialDashboard();
+  });
+</script>
+
+</body>
+</html>

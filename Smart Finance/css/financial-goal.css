@@ -1,0 +1,294 @@
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* CSS Variables for consistent theming */
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea, #764ba2);
+  --surface-gradient: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  --background-light: linear-gradient(135deg, #f0f4ff, #e0e7ff);
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --border-light: rgba(148, 163, 184, 0.1);
+  --shadow-light: rgba(0, 0, 0, 0.08);
+  --shadow-medium: rgba(0, 0, 0, 0.15);
+  --primary-shadow: rgba(102, 126, 234, 0.3);
+  --border-radius: 16px;
+  --border-radius-sm: 12px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Goals Card */
+.goals-card {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 32px;
+  margin: 20px;
+  box-shadow: 0 10px 25px var(--shadow-light);
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+}
+
+.goals-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 25px 50px var(--shadow-medium);
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.card-title {
+  font-size: clamp(20px, 4vw, 24px);
+  font-weight: 700;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Add Button */
+.add-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius-sm);
+  border: none;
+  background: var(--primary-gradient);
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px var(--primary-shadow);
+}
+
+.add-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.add-btn:active {
+  transform: scale(0.95);
+}
+
+/* Goal Items */
+.goal-item {
+  background: var(--surface-gradient);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-bottom: var(--spacing-md);
+  border: 1px solid var(--border-light);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.goal-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 8px 25px var(--shadow-light);
+}
+
+.goal-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: var(--primary-gradient);
+  transition: width 0.3s ease;
+}
+
+.goal-item:hover::before {
+  width: 6px;
+}
+
+/* Goal Header & Content */
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.goal-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 16px;
+}
+
+.goal-amount {
+  font-weight: 700;
+  color: #667eea;
+  font-size: 14px;
+}
+
+/* Progress Components */
+.progress-container {
+  margin: 12px 0;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--primary-gradient);
+  border-radius: 6px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.progress-text {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-sm);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Summary Section */
+.summary {
+  margin-top: var(--spacing-lg);
+  padding: 20px;
+  background: var(--background-light);
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.summary-item {
+  text-align: center;
+}
+
+.summary-value {
+  font-size: clamp(18px, 3vw, 20px);
+  font-weight: 700;
+  color: #667eea;
+  display: block;
+}
+
+.summary-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-secondary);
+}
+
+.empty-icon {
+  font-size: clamp(36px, 6vw, 48px);
+  margin-bottom: var(--spacing-md);
+  opacity: 0.5;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .goals-card {
+    margin: 10px;
+    padding: 20px;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    text-align: center;
+  }
+  
+  .goal-header {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .progress-text {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --surface-gradient: linear-gradient(135deg, #1e293b, #334155);
+    --background-light: linear-gradient(135deg, #1e293b, #0f172a);
+    --shadow-light: rgba(0, 0, 0, 0.3);
+    --shadow-medium: rgba(0, 0, 0, 0.4);
+  }
+  
+  .goals-card {
+    background: #0f172a;
+  }
+  
+  .progress-bar {
+    background: #334155;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus states for keyboard navigation */
+.add-btn:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* Enhanced hover effects for desktop */
+@media (hover: hover) {
+  .goal-item:hover {
+    transform: translateX(4px) scale(1.01);
+  }
+  
+  .add-btn:hover {
+    transform: scale(1.05) rotate(90deg);
+  }
+}
